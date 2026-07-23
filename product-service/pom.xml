@@ -31,6 +31,8 @@
 		<java.version>25</java.version>
 		<org.mapstruct.version>1.6.3</org.mapstruct.version>
 		<springdoc.version>2.5.0</springdoc.version>
+		<temporal.version>1.27.0</temporal.version>
+		<springwolf.version>0.13.0</springwolf.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -95,11 +97,11 @@
 			<artifactId>temporal-sdk</artifactId>
 			<version>${temporal.version}</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>io.temporal</groupId>
 			<artifactId>temporal-spring-boot-starter-alpha</artifactId>
 			<version>${temporal.version}</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.springdoc</groupId>
