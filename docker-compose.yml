@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+
+  temporal-mysql:
+    image: mysql:8.0
+    container_name: temporal-mysql
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: temporal
+
+    ports:
+      - "3307:3306"
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  temporal:
+    image: temporalio/auto-setup:1.24.0
+    container_name: temporal-server
+
+    depends_on:
+      temporal-mysql:
+        condition: service_healthy
+
+    environment:
+      DB: mysql8
+      MYSQL_SEEDS: temporal-mysql
+      MYSQL_USER: root
+      MYSQL_PWD: root
+
+    ports:
+      - "7233:7233"
+
+  temporal-ui:
+    image: temporalio/ui:2.28.0
+
+    ports:
+      - "8088:8080"
+
+    environment:
+      TEMPORAL_ADDRESS: temporal:7233
+
+    depends_on:
+      - temporal
